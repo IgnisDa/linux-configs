@@ -39,19 +39,16 @@ import subprocess
 from typing import List
 
 from libqtile import bar, hook, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Screen
+from libqtile.config import Click, Drag, Key, Screen
 from libqtile.lazy import lazy
-from settings import bindings
-
-# from libqtile.utils import guess_terminal
+from settings import bindings, groups
 
 mod = "mod4"
-# terminal = guess_terminal()
 terminal = 'kitty'
 
 keys = bindings.keys
 
-groups = [Group(i) for i in "12345678"]
+groups = groups.groups
 
 for i in groups:
     keys.extend([
@@ -109,8 +106,7 @@ screens = [
                 ),
                 widget.Systray(),
                 widget.Clock(format='%d-%m-%Y %a %I:%M %p'),
-                widget.QuickExit(),
-                widget.BatteryIcon()
+                widget.Battery(format='{percent:2.0%}')
             ],
             24,
         ),
@@ -152,14 +148,6 @@ floating_layout = layout.Floating(float_rules=[
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
 wmname = "LG3D"
 
 

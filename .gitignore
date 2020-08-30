@@ -5,3 +5,7 @@
 !scripts
 !fish
 !ranger
+!archiso
+archiso/work/*
+archiso/out/*
+**/*pycache*/**

@@ -2,13 +2,10 @@
 from libqtile.config import Key
 from libqtile.lazy import lazy
 
-# from libqtile.utils import guess_terminal
-
 mod = "mod4"
-# terminal = guess_terminal()
 terminal = 'kitty'
 
-keys = [
+core_keys = [
     # Switch between windows in current stack pane
     Key([mod], "k", lazy.layout.down(),
         desc="Move focus down in stack pane"),
@@ -35,7 +32,6 @@ keys = [
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -45,19 +41,32 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown qtile"),
     Key([mod], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
+]
 
-    # Control screen brightness
-    Key([], "XF86MonBrightnessUp", lazy.spawn(
-        'light -A 5'
-    ), desc="Brightness up"),
-    Key([], "XF86MonBrightnessDown", lazy.spawn(
-        'light -U 5'
-    ), desc="Brightness down"),
+volume_keys = [
     Key([], "XF86AudioRaiseVolume", lazy.spawn(
         "pactl set-sink-volume @DEFAULT_SINK@ +5%"
     ), desc="Increase volume"),
     Key([], "XF86AudioLowerVolume", lazy.spawn(
         "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     ), desc="Decrease volume"),
-
 ]
+
+brightness_keys = [
+    Key([], "XF86MonBrightnessUp", lazy.spawn(
+        'light -A 5'
+    ), desc="Brightness up"),
+    Key([], "XF86MonBrightnessDown", lazy.spawn(
+        'light -U 5'
+    ), desc="Brightness down"),
+]
+
+program_keys = [
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod, "shift"], "f", lazy.spawn("qutebrowser"), desc="Launch browser"),
+    Key([mod, "shift"], "v", lazy.spawn("code"), desc="Launch VSCode"),
+    Key([mod, "shift"], "r", lazy.spawn("kitty --class 'file-manager' ranger"),
+        desc="Launch Ranger"),
+]
+
+keys = core_keys + program_keys + volume_keys + brightness_keys
