@@ -2,7 +2,10 @@
 !.gitignore
 !i3
 !qtile
+!ncmpcpp
+!mpd
 !scripts
+!youtube-dl
 !fish
 !ranger
 !archiso

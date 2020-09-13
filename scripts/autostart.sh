@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 #kitty &
-feh --bg-scale ~/Documents/Pictures/Wallpapers/hills.jpg --no-fehbg
+feh --bg-scale ~/Personal/Pictures/Wallpapers/hills.jpg --no-fehbg
