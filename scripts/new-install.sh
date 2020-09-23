@@ -211,13 +211,9 @@ systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable docker
 
-systemctl start NetworkManager
-systemctl start docker
-
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay/
 makepkg -si
-
 
 echo "
 ###############################################################################
