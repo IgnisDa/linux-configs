@@ -46,10 +46,10 @@ if ! source install.conf; then
 	echo "Please enter username:"
 	read -r username
 
-	echo "Please enter password:"
+	echo "Please enter root password:"
 	read -r -s password
 
-	echo "Please repeat password:"
+	echo "Please repeat root password:"
 	read -r -s password2
 
 	# Check both passwords match
@@ -76,12 +76,6 @@ echo "
 
 pacman -Syyu
 
-# Rank-mirrors
-echo "Ranking and adding mirrors..."
-pacman --noconfirm -S reflector
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
 echo "
@@ -93,7 +87,7 @@ echo "
 pacman_packages=()
 
 # Install core stuff
-pacman_packages+=( base-devel grub unzip efibootmgr os-prober )
+pacman_packages+=( base-devel grub unzip efibootmgr os-prober amd-ucode )
 
 # Install X essentials
 pacman_packages+=( libinput xorg-xinput xorg-xrandr)
@@ -116,6 +110,9 @@ pacman_packages+=( qtile htop sddm light feh neofetch )
 # Install dev tools
 pacman_packages+=( vim code zathura zathura-pdf-mupdf )
 
+# Install work tools
+pacman_packages+=( docker git )
+
 # Install browser
 pacman_packages+=( qutebrowser )
 
@@ -123,8 +120,6 @@ pacman_packages+=( qutebrowser )
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
-
-chsh -s /bin/bash
 
 echo "
 ###############################################################################
@@ -155,7 +150,7 @@ echo "
 
 # Create user with home
 if ! id -u "$username"; then
-	useradd -m --groups users,wheel,docker,video,input,fuse "$username"
+	useradd -m --groups users,wheel,docker,video,input "$username"
 	echo "$username:$password" | chpasswd
 	chsh -s /bin/bash "$username"
 fi
@@ -186,12 +181,36 @@ else
 	pacman -Rns "$(pacman -Qdtq)"
 fi
 
+echo "Configuring GRUB"
+mkdir /boot/efi
+echo "Enter your Linux main partition (example /dev/sda1):"
+read -r partition
+mount /dev/"$partition" /boot/efi
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+os-prober
+
 # Replace in the same state
 cd "$pwd"
 echo "Running git configurations"
 
-git config user.username "$git_username"
-git config user.email "$email"
+git config --global user.username "$git_username"
+git config --global user.email "$email"
+
+echo "Installing docker-compose"
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+git clone https://github.com/IgnisDa/linux-configs.git /tmp/
+cp /tmp/linux-configs /home/"$username"/.config
+
+mkdir -p /home/"$username"/work/projects/
+
+systemctl enable sddm
+systemctl enable NetworkManager
+systemctl enable docker
+
+systemctl start NetworkManager
+systemctl start docker
 
 echo "
 ###############################################################################
