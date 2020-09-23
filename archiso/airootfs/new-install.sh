@@ -118,9 +118,6 @@ pacman_packages+=( vim code zathura zathura-pdf-mupdf )
 # Install browser
 pacman_packages+=( qutebrowser )
 
-# Work tools
-pacman_packages+=( nodejs npm )
-
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
@@ -135,19 +132,13 @@ echo "
 "
 # Generate locales
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-sed -i 's/^#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 
 # Set timezone
-timedatectl --no-ask-password set-timezone Europe/Paris
+timedatectl --no-ask-password set-timezone Asia/Kolkata
 
-# Set NTP clock
-timedatectl --no-ask-password set-ntp 1
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-# Set locale
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="C" LC_TIME="fr_FR.UTF-8"
-
-# Hostname
 hostnamectl --no-ask-password set-hostname "$hostname"
 
 echo "
