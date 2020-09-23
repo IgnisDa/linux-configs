@@ -80,7 +80,7 @@ pacman -Syyu
 echo "Ranking and adding mirrors..."
 pacman --noconfirm -S reflector
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-reflector -c India -f 10 -p http --save /etc/pacman.d/mirrorlist
+reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
