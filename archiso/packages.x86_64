@@ -1,61 +1,3 @@
-base
-linux
-mkinitcpio
-mkinitcpio-archiso
-syslinux
-
-# Added by ignisda
-
-# Core stuff
-base-devel
-arch-install-scripts
-git
-libinput
-xorg-xinput
-man
-grub
-unzip
-efibootmgr
-os-prober
-
-# Shell and related
-fish
-
-# Sound
-alsa-lib
-pavucontrol
-pulseaudio
-alsa-plugins
-alsa-utils
-
-# Internet and network
-networkmanager
-gnome-keyring
-wget
-reflector
-
-# Window Managers and desktop managers and other required utilities
-qtile
-htop
-sddm
-light
-feh
-
-# File manager
-ranger
-
-# Browser
-qutebrowser
-
-# IDE and viewers
-vim
-code
-zathura
-zathura-pdf-mupdf
-
-# Eye candy
-neofetch
-
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 amd-ucode
@@ -84,6 +26,7 @@ fsarchiver
 gnu-netcat
 gpm
 gptfdisk
+grml-zsh-config
 haveged
 hdparm
 intel-ucode
@@ -150,3 +93,4 @@ wpa_supplicant
 wvdial
 xfsprogs
 xl2tpd
+zsh
