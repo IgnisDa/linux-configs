@@ -52,9 +52,6 @@ if ! source install.conf; then
 	echo "Please repeat password:"
 	read -r -s password2
 
-    echo "Please enter your country (for pacman configuration): "
-    read -r country
-
 	# Check both passwords match
 	if [ "$password" != "$password2" ]; then
 	    echo "Passwords do not match"
@@ -76,10 +73,13 @@ echo "
 # Pacman conf
 ###############################################################################
 "
+
+pacman -Syyu
+
 # Rank-mirrors
 pacman --noconfirm -S reflector
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-reflector -c "$country" -f 10 -p http --save /etc/pacman.d/mirrorlist
+reflector -c India -f 10 -p http --save /etc/pacman.d/mirrorlist
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
@@ -95,7 +95,7 @@ pacman_packages=()
 pacman_packages+=( base-devel grub unzip efibootmgr os-prober )
 
 # Install X essentials
-pacman_packages+=( libinput xorg-server dbus xorg-fonts-encodings xorg-xinput xorg-xrandr)
+pacman_packages+=( libinput xorg-xinput xorg-xrandr)
 
 # Install font essentials
 pacman_packages+=( cairo fontconfig freetype2 )
@@ -123,7 +123,7 @@ pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
 
-chsh -s /bin/zsh
+chsh -s /bin/bash
 
 echo "
 ###############################################################################
@@ -154,7 +154,7 @@ echo "
 
 # Create user with home
 if ! id -u "$username"; then
-	useradd -m --groups users,wheel "$username"
+	useradd -m --groups users,wheel,docker,video,input,fuse "$username"
 	echo "$username:$password" | chpasswd
 	chsh -s /bin/bash "$username"
 fi
@@ -167,8 +167,6 @@ echo "
 # Install user
 ###############################################################################
 "
-
-cp ./install_user.sh /home/"$username"/
 
 echo "
 ###############################################################################

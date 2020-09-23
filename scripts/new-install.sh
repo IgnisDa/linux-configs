@@ -52,9 +52,6 @@ if ! source install.conf; then
 	echo "Please repeat password:"
 	read -r -s password2
 
-    echo "Please enter your country (for pacman configuration): "
-    read -r country
-
 	# Check both passwords match
 	if [ "$password" != "$password2" ]; then
 	    echo "Passwords do not match"
@@ -76,10 +73,14 @@ echo "
 # Pacman conf
 ###############################################################################
 "
+
+pacman -Syyu
+
 # Rank-mirrors
+echo "Ranking and adding mirrors..."
 pacman --noconfirm -S reflector
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-reflector -c "$country" -f 10 -p http --save /etc/pacman.d/mirrorlist
+reflector -c India -f 10 -p http --save /etc/pacman.d/mirrorlist
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
@@ -91,14 +92,11 @@ echo "
 
 pacman_packages=()
 
-# Install linux headers
-pacman_packages+=( linux-headers )
-
 # Install core stuff
 pacman_packages+=( base-devel grub unzip efibootmgr os-prober )
 
 # Install X essentials
-pacman_packages+=( libinput xorg-server dbus xorg-fonts-encodings xorg-xinput xorg-xrandr)
+pacman_packages+=( libinput xorg-xinput xorg-xrandr)
 
 # Install font essentials
 pacman_packages+=( cairo fontconfig freetype2 )
@@ -121,15 +119,12 @@ pacman_packages+=( vim code zathura zathura-pdf-mupdf )
 # Install browser
 pacman_packages+=( qutebrowser )
 
-# Work tools
-pacman_packages+=( nodejs npm )
-
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
 
-chsh -s /bin/zsh
+chsh -s /bin/bash
 
 echo "
 ###############################################################################
@@ -138,19 +133,13 @@ echo "
 "
 # Generate locales
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-sed -i 's/^#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 
 # Set timezone
-timedatectl --no-ask-password set-timezone Europe/Paris
+timedatectl --no-ask-password set-timezone Asia/Kolkata
 
-# Set NTP clock
-timedatectl --no-ask-password set-ntp 1
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-# Set locale
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="C" LC_TIME="fr_FR.UTF-8"
-
-# Hostname
 hostnamectl --no-ask-password set-hostname "$hostname"
 
 echo "
@@ -166,7 +155,7 @@ echo "
 
 # Create user with home
 if ! id -u "$username"; then
-	useradd -m --groups users,wheel "$username"
+	useradd -m --groups users,wheel,docker,video,input,fuse "$username"
 	echo "$username:$password" | chpasswd
 	chsh -s /bin/bash "$username"
 fi
@@ -179,8 +168,6 @@ echo "
 # Install user
 ###############################################################################
 "
-
-cp ./install_user.sh /home/"$username"/
 
 echo "
 ###############################################################################
