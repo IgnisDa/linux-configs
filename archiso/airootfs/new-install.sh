@@ -130,6 +130,8 @@ echo "
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 
+hwclock --systohc
+
 # Set timezone
 timedatectl --no-ask-password set-timezone Asia/Kolkata
 
@@ -183,7 +185,7 @@ fi
 
 echo "Configuring GRUB"
 mkdir /boot/efi
-echo "Enter your Linux main partition (example /dev/sda1):"
+echo "Enter your Linux main partition (example 'sda2'):"
 read -r partition
 mount /dev/"$partition" /boot/efi
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
@@ -200,8 +202,8 @@ git config --global user.email "$email"
 echo "Installing docker-compose"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-git clone https://github.com/IgnisDa/linux-configs.git /tmp/
-cp /tmp/linux-configs /home/"$username"/.config
+git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
+cp -r /tmp/.config /home/"$username"/.config
 
 mkdir -p /home/"$username"/work/projects/
 
@@ -212,8 +214,13 @@ systemctl enable docker
 systemctl start NetworkManager
 systemctl start docker
 
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+cd /tmp/yay/
+makepkg -si
+
+
 echo "
 ###############################################################################
-# Done
+# Done, please reboot now
 ###############################################################################
 "
