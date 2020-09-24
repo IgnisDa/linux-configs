@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Setting color variables
+
+colored_echo(){
+    Red='\033[0;31m'
+    Green='\033[0;32m'
+    Yellow='\033[0;33m'
+    Blue='\033[0;34m'
+    NC="\033[0m" # No Color
+    printf "%b%b%b\n" "${!1}" "${2}" "${NC}"
+}
+
+
 # see http://redsymbol.net/articles/unofficial-bash-strict-mode/
 # To silent an error || true
 set -euo pipefail
@@ -9,66 +21,68 @@ if [ "${1:-}" = "--debug" ] || [ "${1:-}" = "-d" ]; then
 	set -x
 fi
 
+colored_echo "Green" "
 ###############################################################################
 # Questions part
 ###############################################################################
+"
 
 if [ $EUID -ne 0 ]; then
-   echo "This script must be run as root" 1>&2
+   colored_echo "Red" "This script must be run as root" 1>&2
    exit 1
 fi
 
-echo "
+colored_echo "Yellow" "
 You're about to install my basic user session.
 Require a xf86-video driver, an internet connection, base and base-devel packages.
 Please enter 'yes' to confirm:
 "
-read -r -r yes
+read -r yes
 
 # Confirm video driver
 if [ "$yes" != "yes" ]; then
-    echo "Please install a xf86-video driver"
+    colored_echo "Yellow" "Please install a xf86-video driver"
 	pacman -Ss xf86-video
     exit 1
 fi
 
 # Check internet connection
 if ! [ "$(ping -c 1 8.8.8.8)" ]; then
-    echo "Please check your internet connection"
+    colored_echo "Yellow" "Please check your internet connection"
     exit 1
 fi
 
 if ! source install.conf; then
 
-	echo "Please enter hostname:"
+	colored_echo "Yellow" "Please enter hostname:"
 	read -r hostname
 
-	echo "Please enter username:"
+	colored_echo "Yellow" "Please enter username:"
 	read -r username
 
-	echo "Please enter root password:"
+	colored_echo "Yellow" "Please enter root password:"
 	read -r -s password
 
-	echo "Please repeat root password:"
+	colored_echo "Yellow" "Please repeat root password:"
 	read -r -s password2
 
 	# Check both passwords match
 	if [ "$password" != "$password2" ]; then
-	    echo "Passwords do not match"
+	    colored_echo "Yellow" "Passwords do not match"
 	    exit 1
 	fi
 
-	echo "Please enter git username:"
+	colored_echo "Yellow" "Please enter git username:"
 	read -r git_username
 
-	echo "Please enter email:"
+	colored_echo "Yellow" "Please enter email:"
 	read -r email
 fi
 
 # Save current pwd
 pwd=$(pwd)
 
-echo "
+colored_echo "Green" "
 ###############################################################################
 # Pacman conf
 ###############################################################################
@@ -78,7 +92,7 @@ pacman -Syyu
 
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
-echo "
+colored_echo "Green" "
 ###############################################################################
 # Install part
 ###############################################################################
@@ -119,9 +133,12 @@ pacman_packages+=( qutebrowser )
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
+# Install music stuff
+pacman_packages+=( mpd ncmpcpp )
+
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
 
-echo "
+colored_echo "Green" "
 ###############################################################################
 # Systemd part
 ###############################################################################
@@ -135,16 +152,16 @@ hwclock --systohc
 # Set timezone
 timedatectl --no-ask-password set-timezone Asia/Kolkata
 
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+colored_echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 hostnamectl --no-ask-password set-hostname "$hostname"
 
-echo "
+colored_echo "Green" "
 ###############################################################################
 # Modules
 ###############################################################################
 "
-echo "
+colored_echo "Green" "
 ###############################################################################
 # User part
 ###############################################################################
@@ -153,20 +170,14 @@ echo "
 # Create user with home
 if ! id -u "$username"; then
 	useradd -m --groups users,wheel,docker,video,input "$username"
-	echo "$username:$password" | chpasswd
+	colored_echo "$username:$password" | chpasswd
 	chsh -s /bin/bash "$username"
 fi
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
-echo "
-###############################################################################
-# Install user
-###############################################################################
-"
-
-echo "
+colored_echo "Green" "
 ###############################################################################
 # Cleaning
 ###############################################################################
@@ -178,28 +189,25 @@ sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
 # Clean orphans pkg
 if [[ -z $(pacman -Qdt) ]]; then
-	echo "No orphans to remove."
+	colored_echo "No orphans to remove."
 else
 	pacman -Rns "$(pacman -Qdtq)"
 fi
 
-echo "Configuring GRUB"
-mkdir /boot/efi
-echo "Enter your Linux main partition (example 'sda2'):"
-read -r partition
-mount /dev/"$partition" /boot/efi
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
-os-prober
-
 # Replace in the same state
 cd "$pwd"
-echo "Running git configurations"
+colored_echo "Running git configurations"
+
+colored_echo "Green" "
+###############################################################################
+# Install user
+###############################################################################
+"
 
 git config --global user.username "$git_username"
 git config --global user.email "$email"
 
-echo "Installing docker-compose"
+colored_echo "Green" "Installing docker-compose"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
@@ -215,7 +223,40 @@ git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay/
 makepkg -si
 
-echo "
+colored_echo "Yellow" "Would you like to add a new password for $username? (yes/no)"
+read -r yes
+if [ "$yes" != "yes" ]; then
+    colored_echo "Yellow" "Skipping this step"
+else
+	colored_echo "Yellow" "Switching to $username's shell"
+	su -- "$username"
+	colored_echo "Yellow" "Please enter $username's new password:"
+	read -r -s password
+	colored_echo "Yellow" "Please repeat $username's new password:"
+	read -r -s password2
+	if [ "$password" != "$password2" ]; then
+	    colored_echo "Yellow" "Passwords do not match"
+	    exit 1
+	fi
+	colored_echo "Yellow" "$username:$password" | chpasswd
+	colored_echo "Yellow" "Completed. Switching back to root user..."
+	su -- root
+fi
+
+
+colored_echo "Red" "
+###############################################################################
+# Please run these commands accordingly to configure grub
+###############################################################################
+# mkdir /boot/efi
+# mount /dev/main-partition /boot/efi
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+# grub-mkconfig -o /boot/grub/grub.cfg
+# os-prober
+###############################################################################
+"
+
+colored_echo "Red" "
 ###############################################################################
 # Done, please reboot now
 ###############################################################################
