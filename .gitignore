@@ -11,4 +11,4 @@
 !archiso
 archiso/work/*
 archiso/out/*
-**/*pycache*/**
+**/*__pycache__*/**
