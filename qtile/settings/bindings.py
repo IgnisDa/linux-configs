@@ -63,6 +63,7 @@ brightness_keys = [
 
 program_keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Print", lazy.spawn("flameshot gui"), desc="Launch screenshot software"),
     Key([mod, "shift"], "f", lazy.spawn("qutebrowser"), desc="Launch browser"),
     Key([mod, "shift"], "v", lazy.spawn("code"), desc="Launch VSCode"),
     Key([mod, "shift"], "r", lazy.spawn("kitty --class 'file-manager' ranger"),
