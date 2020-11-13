@@ -1,10 +1,10 @@
 # Playlist options
 --yes-playlist
-# --extract-audio
-# --audio-format mp3
+--extract-audio
+--audio-format mp3
 
 # Thumbnail images
-# --write-all-thumbnails
+--write-all-thumbnails
 
 # Post-processing
 --add-metadata
