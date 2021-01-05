@@ -234,6 +234,13 @@ makepkg -si
 pip install commitizen
 yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome-stable
 
+bashRC="/home/"$username"/.bashrc"
+
+echo "if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $bashRC
+echo "then" >> $bashRC
+echo "	exec fish" >> $bashRC
+echo "fi" >> $bashRC
+
 colored_echo "Yellow" "Would you like to add a new password for $username? (yes/no)"
 read -r yes
 if [ "$yes" != "yes" ]; then
