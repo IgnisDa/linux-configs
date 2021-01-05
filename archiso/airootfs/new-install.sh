@@ -120,7 +120,7 @@ pacman_packages+=( cairo fontconfig freetype2 )
 pacman_packages+=( networkmanager gnome-keyring wget )
 
 # Install shell and terminals
-pacman_packages+=( fish kitty )
+pacman_packages+=( fish kitty ranger )
 
 # Install linux fonts
 pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
@@ -215,14 +215,17 @@ git config --global user.username "$git_username"
 git config --global user.email "$email"
 
 colored_echo "Green" "Installing docker-compose"
-sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 
 git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
 cp -r /tmp/.config /home/"$username"/.config
+chown -R $username:$username -R /home/$username/.config/
 
 mkdir -p /home/"$username"/work/projects/
 mkdir -p /home/"$username"/work/tutorials/
 mkdir -p /home/"$username"/work/learning/
+chown -R $username:$username -R /home/$username/work/
 
 systemctl enable sddm
 systemctl enable NetworkManager
