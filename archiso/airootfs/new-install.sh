@@ -132,7 +132,7 @@ pacman_packages+=( awesome htop sddm light feh neofetch )
 pacman_packages+=( vim )
 
 # Install work tools
-pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs )
+pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs python-pip )
 
 # Install browser
 # pacman_packages+=( qutebrowser )
@@ -231,18 +231,17 @@ pip install commitizen
 
 bashRC=/home/"$username"/.bashrc
 
-echo "if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $bashRC
-echo "then" >> $bashRC
-echo "	exec fish" >> $bashRC
-echo "fi" >> $bashRC
+echo "" >> $bashRC
+echo "# if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $bashRC
+echo "# then" >> $bashRC
+echo "# 	exec fish" >> $bashRC
+echo "# fi" >> $bashRC
 
 colored_echo "Yellow" "Would you like to add a new password for $username? (yes/no)"
 read -r yes
 if [ "$yes" != "yes" ]; then
     colored_echo "Yellow" "Skipping this step"
 else
-	colored_echo "Yellow" "Switching to $username's shell"
-	su -- "$username"
 	colored_echo "Yellow" "Please enter $username's new password:"
 	read -r -s password
 	colored_echo "Yellow" "Please repeat $username's new password:"
@@ -254,10 +253,8 @@ else
 	echo "$username:$password" | chpasswd
 	git clone https://aur.archlinux.org/yay.git /tmp/yay
 	cd /tmp/yay/
-	makepkg -si
-	yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome-stable
-	colored_echo "Yellow" "Completed. Switching back to root user..."
-	su -- root
+	sudo -u $username makepkg -si --noconfirm
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome
 fi
 
 
