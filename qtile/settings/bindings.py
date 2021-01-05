@@ -69,10 +69,10 @@ program_keys = [
     Key([mod, "shift"], "v", lazy.spawn("code"), desc="Launch VSCode"),
     Key([mod, "shift"], "r", lazy.spawn("kitty --class 'file-manager' ranger"),
         desc="Launch Ranger"),
-    Key([], "XF86AudioPlay", lazy.spawn("mpc toggle"), desc="Toggle the music player"),
-    Key([], "XF86AudioPrev", lazy.spawn("mpc prev"),
+    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause"), desc="Toggle the music player"),
+    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous"),
         desc="Play the previous music in queue"),
-    Key([], "XF86AudioNext", lazy.spawn("mpc next"), desc="Play the next music in queue")
+    Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Play the next music in queue")
 ]
 
 keys = core_keys + program_keys + volume_keys + brightness_keys

@@ -13,6 +13,8 @@ group_names = [
      'matches': [Match(wm_class=['file-manager'])]},
     {'label': 'College', 'name': 5,
      'matches': [Match(wm_class=['notion', 'microsoft teams - preview'])]},
+    {'label': 'Music', 'name': 6,
+     'matches': [Match(wm_class=['spotify',])]},
 ]
 
 for option in group_names:

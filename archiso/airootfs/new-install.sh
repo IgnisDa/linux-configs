@@ -129,10 +129,10 @@ pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
 pacman_packages+=( awesome htop sddm light feh neofetch )
 
 # Install dev tools
-pacman_packages+=( vim code zathura zathura-pdf-mupdf )
+pacman_packages+=( vim )
 
 # Install work tools
-pacman_packages+=( docker git )
+pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant )
 
 # Install browser
 pacman_packages+=( qutebrowser )
@@ -221,6 +221,8 @@ git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
 cp -r /tmp/.config /home/"$username"/.config
 
 mkdir -p /home/"$username"/work/projects/
+mkdir -p /home/"$username"/work/tutorials/
+mkdir -p /home/"$username"/work/learning/
 
 systemctl enable sddm
 systemctl enable NetworkManager
@@ -229,6 +231,8 @@ systemctl enable docker
 git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay/
 makepkg -si
+pip install commitizen
+yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome-stable
 
 colored_echo "Yellow" "Would you like to add a new password for $username? (yes/no)"
 read -r yes
