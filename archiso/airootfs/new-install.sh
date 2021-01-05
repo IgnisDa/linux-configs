@@ -82,7 +82,7 @@ if ! source install.conf; then
 	colored_echo "Yellow" "Please enter git username:"
 	read -r git_username
 
-	colored_echo "Yellow" "Please enter email:"
+	colored_echo "Yellow" "Please enter git email:"
 	read -r email
 fi
 
@@ -132,10 +132,10 @@ pacman_packages+=( awesome htop sddm light feh neofetch )
 pacman_packages+=( vim )
 
 # Install work tools
-pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant )
+pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs )
 
 # Install browser
-pacman_packages+=( qutebrowser )
+# pacman_packages+=( qutebrowser )
 
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
@@ -159,7 +159,7 @@ hwclock --systohc
 # Set timezone
 timedatectl --no-ask-password set-timezone Asia/Kolkata
 
-colored_echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 hostnamectl --no-ask-password set-hostname "$hostname"
 
@@ -177,7 +177,7 @@ colored_echo "Green" "
 # Create user with home
 if ! id -u "$username"; then
 	useradd -m --groups users,wheel,docker,video,input "$username"
-	colored_echo "$username:$password" | chpasswd
+	echo "$username:$password" | chpasswd
 	chsh -s /bin/bash "$username"
 fi
 
@@ -196,14 +196,14 @@ sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
 # Clean orphans pkg
 if [[ -z $(pacman -Qdt) ]]; then
-	colored_echo "No orphans to remove."
+	colored_echo "Red" "No orphans to remove."
 else
 	pacman -Rns "$(pacman -Qdtq)"
 fi
 
 # Replace in the same state
 cd "$pwd"
-colored_echo "Running git configurations"
+colored_echo "Green" "Running git configurations"
 
 colored_echo "Green" "
 ###############################################################################
@@ -227,14 +227,9 @@ mkdir -p /home/"$username"/work/learning/
 systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable docker
-
-git clone https://aur.archlinux.org/yay.git /tmp/yay
-cd /tmp/yay/
-makepkg -si
 pip install commitizen
-yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome-stable
 
-bashRC="/home/"$username"/.bashrc"
+bashRC=/home/"$username"/.bashrc
 
 echo "if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $bashRC
 echo "then" >> $bashRC
@@ -256,7 +251,11 @@ else
 	    colored_echo "Yellow" "Passwords do not match"
 	    exit 1
 	fi
-	colored_echo "Yellow" "$username:$password" | chpasswd
+	echo "$username:$password" | chpasswd
+	git clone https://aur.archlinux.org/yay.git /tmp/yay
+	cd /tmp/yay/
+	makepkg -si
+	yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome-stable
 	colored_echo "Yellow" "Completed. Switching back to root user..."
 	su -- root
 fi
