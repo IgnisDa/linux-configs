@@ -132,7 +132,7 @@ pacman_packages+=( awesome htop sddm light feh neofetch )
 pacman_packages+=( vim )
 
 # Install work tools
-pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs python-pip )
+pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs npm python-pip )
 
 # Install browser
 # pacman_packages+=( qutebrowser )
