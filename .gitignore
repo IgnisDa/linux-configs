@@ -10,6 +10,7 @@
 !awesome
 !ranger
 !archiso
+!pypoetry
 archiso/work/*
 archiso/out/*
 **/*__pycache__*/**
