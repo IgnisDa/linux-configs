@@ -120,7 +120,7 @@ pacman_packages+=( cairo fontconfig freetype2 )
 pacman_packages+=( networkmanager gnome-keyring wget )
 
 # Install shell and terminals
-pacman_packages+=( fish kitty ranger )
+pacman_packages+=( fish alacritty ranger )
 
 # Install linux fonts
 pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
