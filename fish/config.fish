@@ -1,6 +1,7 @@
 #set fish_function_path $fish_function_path $HOME/.config/fish/plugin-foreign-env/functions
-set PATH "$PATH:/var/lib/snapd/snap/bin"
-set PATH "$PATH:$HOME/.cargo/bin"
+set PATH $PATH /var/lib/snapd/snap/bin
+set PATH $PATH (flutter sdk-path)/bin
+set PATH $PATH $HOME/.cargo/bin
 set EDITOR vim
 
 # Load pyenv only if it is installed on the system

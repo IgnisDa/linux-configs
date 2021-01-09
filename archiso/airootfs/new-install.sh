@@ -230,7 +230,7 @@ chown -R $username:$username -R /home/$username/work/
 systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable docker
-pip install commitizen
+pip install commitizen cookiecutter
 
 bashRC=/home/"$username"/.bashrc
 
