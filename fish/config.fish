@@ -5,6 +5,9 @@ set PATH $PATH $HOME/.cargo/bin
 set EDITOR vim
 
 # Load pyenv only if it is installed on the system
-if command pyenv -v > /dev/null
-	status --is-interactive; and source (pyenv init -|psub)
+if command pyenv -v >/dev/null
+    status --is-interactive; and source (pyenv init -|psub)
 end
+
+# Just call `new-project` in your fish terminal to start a new project with the preferred template
+alias new-project="cookiecutter https://github.com/IgnisDa/project-cookiecutter.git --directory=\"django-nuxt-docusaurus\""

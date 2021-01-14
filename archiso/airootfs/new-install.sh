@@ -129,7 +129,7 @@ pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
 pacman_packages+=( awesome htop sddm light feh neofetch )
 
 # Install dev tools
-pacman_packages+=( vim )
+pacman_packages+=( vim flameshot )
 
 # Install work tools
 pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs npm python-pip )

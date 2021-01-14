@@ -11,6 +11,7 @@
 !ranger
 !archiso
 !pypoetry
+!picom
 archiso/work/*
 archiso/out/*
 **/*__pycache__*/**

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-#kitty &
-feh --bg-scale ~/Personal/Pictures/Wallpapers/hills.jpg --no-fehbg
+# enable the composite manager for blur and transparency
+picom --experimental-backends
