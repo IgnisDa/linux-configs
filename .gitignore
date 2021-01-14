@@ -13,6 +13,7 @@
 !archiso
 !pypoetry
 !picom
+!starship.toml
 archiso/work/*
 archiso/out/*
 **/*__pycache__*/**

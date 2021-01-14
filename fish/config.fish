@@ -11,3 +11,6 @@ end
 
 # Just call `new-project` in your fish terminal to start a new project with the preferred template
 alias new-project="cookiecutter https://github.com/IgnisDa/project-cookiecutter.git --directory=\"django-nuxt-docusaurus\""
+
+# Load the starship prompt
+starship init fish | source
