@@ -257,7 +257,7 @@ else
 	git clone https://aur.archlinux.org/yay.git /tmp/yay
 	cd /tmp/yay/
 	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome picom-tryone-git
 fi
 
 
