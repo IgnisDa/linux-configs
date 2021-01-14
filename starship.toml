@@ -3,6 +3,12 @@ add_newline = false
 [line_break]
 disabled = false
 
+[package]
+disabled = true
+
+[python]
+format = "\\($virtualenv\\) "
+
 # Replace the "❯" symbol in the prompt with "➟"
 [character]      # The name of the module we are configuring is "character"
 use_symbol_for_status = true

@@ -13,4 +13,4 @@ end
 alias new-project="cookiecutter https://github.com/IgnisDa/project-cookiecutter.git --directory=\"django-nuxt-docusaurus\""
 
 # Load the starship prompt
-starship init fish | source
+which starship &>/dev/null && starship init fish | source
