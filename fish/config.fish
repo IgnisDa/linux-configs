@@ -10,7 +10,7 @@ if command pyenv -v >/dev/null
 end
 
 # Just call `new-project` in your fish terminal to start a new project with the preferred template
-alias new-project="cookiecutter gh:IgnisDa/project-cookiecutter.git --directory=\"django-nuxt-docusaurus\""
+alias new-project="cookiecutter gh:IgnisDa/project-cookiecutter --directory=\"django-nuxt-docusaurus\""
 
 # Load the starship prompt
 which starship &>/dev/null && starship init fish | source
