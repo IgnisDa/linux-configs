@@ -1,6 +1,6 @@
 #set fish_function_path $fish_function_path $HOME/.config/fish/plugin-foreign-env/functions
 set PATH $PATH /var/lib/snapd/snap/bin
-set PATH $PATH (flutter sdk-path)/bin
+which flutter &>/dev/null && set PATH $PATH (flutter sdk-path)/bin
 set PATH $PATH $HOME/.cargo/bin
 set EDITOR vim
 
