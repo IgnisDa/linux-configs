@@ -126,7 +126,7 @@ pacman_packages+=( fish alacritty ranger )
 pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
 
 # Install window manager
-pacman_packages+=( awesome htop sddm light feh neofetch )
+pacman_packages+=( awesome htop sddm light feh neofetch bat )
 
 # Install dev tools
 pacman_packages+=( vim flameshot )
