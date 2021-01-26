@@ -203,16 +203,12 @@ fi
 
 # Replace in the same state
 cd "$pwd"
-colored_echo "Green" "Running git configurations"
 
 colored_echo "Green" "
 ###############################################################################
 # Install user
 ###############################################################################
 "
-
-git config --global user.username "$git_username"
-git config --global user.email "$email"
 
 colored_echo "Green" "Installing docker-compose"
 curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -256,6 +252,11 @@ else
 	echo "$username:$password" | chpasswd
 	git clone https://aur.archlinux.org/yay.git /tmp/yay
 	cd /tmp/yay/
+	colored_echo "Green" "Running git configurations"
+	sudo -u git config --global user.username "$git_username"
+	sudo -u git config --global user.email "$email"
+	sudo -u git config --global pull.rebase "true"
+	sudo -u git config --global core.editor "vim"
 	sudo -u $username makepkg -si --noconfirm
 	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome picom-tryone-git
 fi
