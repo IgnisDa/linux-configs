@@ -117,7 +117,7 @@ pacman_packages+=( libinput xorg-xinput xorg-xrandr)
 pacman_packages+=( cairo fontconfig freetype2 )
 
 # Install internet and network
-pacman_packages+=( networkmanager gnome-keyring wget )
+pacman_packages+=( networkmanager gnome-keyring wget iw )
 
 # Install shell and terminals
 pacman_packages+=( fish alacritty ranger )
