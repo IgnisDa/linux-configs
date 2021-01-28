@@ -3,7 +3,7 @@ set PATH $PATH /var/lib/snapd/snap/bin
 which flutter &>/dev/null && set PATH $PATH (flutter sdk-path)/bin
 set PATH $PATH $HOME/.cargo/bin
 set EDITOR vim
-alias cat="bat"
+
 # Load pyenv only if it is installed on the system
 if command pyenv -v >/dev/null
     status --is-interactive; and source (pyenv init -|psub)
@@ -14,3 +14,9 @@ alias new-project="~/.config/scripts/new-project"
 
 # Load the starship prompt
 which starship &>/dev/null && starship init fish | source
+
+# set the exa alias
+which exa &>/dev/null && alias ls="exa -la"
+
+# set the cat alias
+which bat &>/dev/null && alias cat="bat"

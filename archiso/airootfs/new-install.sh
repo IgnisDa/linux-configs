@@ -126,7 +126,7 @@ pacman_packages+=( fish alacritty ranger )
 pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
 
 # Install window manager
-pacman_packages+=( awesome htop sddm light feh neofetch bat )
+pacman_packages+=( awesome htop sddm light feh neofetch bat exa )
 
 # Install dev tools
 pacman_packages+=( vim flameshot )
@@ -134,14 +134,11 @@ pacman_packages+=( vim flameshot )
 # Install work tools
 pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs npm python-pip )
 
-# Install browser
-# pacman_packages+=( qutebrowser )
-
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 
 # Install music stuff
-pacman_packages+=( mpd ncmpcpp )
+pacman_packages+=( mpd )
 
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
 
@@ -250,8 +247,8 @@ else
 	    exit 1
 	fi
 	echo "$username:$password" | chpasswd
-	git clone https://aur.archlinux.org/yay.git /tmp/yay
-	cd /tmp/yay/
+	git clone https://aur.archlinux.org/yay.git /home/$username/yay
+	cd /home/$username/yay/
 	colored_echo "Green" "Running git configurations"
 	sudo -u git config --global user.username "$git_username"
 	sudo -u git config --global user.email "$email"
