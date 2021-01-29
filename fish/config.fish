@@ -5,9 +5,7 @@ set PATH $PATH $HOME/.cargo/bin
 set EDITOR vim
 
 # Load pyenv only if it is installed on the system
-if command pyenv -v >/dev/null
-    status --is-interactive; and source (pyenv init -|psub)
-end
+which pyenv &>/dev/null && status --is-interactive; and source (pyenv init -|psub)
 
 # Just call `new-project` in your fish terminal to start a new project with the preferred template
 alias new-project="~/.config/scripts/new-project"
