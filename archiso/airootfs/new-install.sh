@@ -132,7 +132,7 @@ pacman_packages+=( awesome htop sddm light feh neofetch bat exa )
 pacman_packages+=( vim flameshot )
 
 # Install work tools
-pacman_packages+=( docker git virtualbox virtualbox-host-modules-arch vagrant nodejs npm python-pip )
+pacman_packages+=( git virtualbox virtualbox-host-modules-arch vagrant python-pip )
 
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
