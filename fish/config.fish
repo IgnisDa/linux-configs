@@ -2,10 +2,13 @@
 set PATH $PATH /var/lib/snapd/snap/bin
 which flutter &>/dev/null && set PATH $PATH (flutter sdk-path)/bin
 set PATH $PATH $HOME/.cargo/bin
-set EDITOR vim
+set EDITOR nvim
 
 # Load pyenv only if it is installed on the system
 which pyenv &>/dev/null && status --is-interactive; and source (pyenv init -|psub)
+
+# set the alias vim
+alias vim="nvim"
 
 # Just call `new-project` in your fish terminal to start a new project with the preferred template
 alias new-project="~/.config/scripts/new-project"
