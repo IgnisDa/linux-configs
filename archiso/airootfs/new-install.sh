@@ -111,7 +111,7 @@ pacman_packages=()
 pacman_packages+=( base-devel grub unzip efibootmgr os-prober amd-ucode )
 
 # Install X essentials
-pacman_packages+=( libinput xorg-xinput xorg-xrandr)
+pacman_packages+=( libinput xorg-xinput xorg-xrandr xf86-input-libinput)
 
 # Install font essentials
 pacman_packages+=( cairo fontconfig freetype2 )
@@ -141,6 +141,23 @@ pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
 pacman_packages+=( mpd )
 
 pacman --noconfirm --needed -S  "${pacman_packages[@]}"
+
+colored_echo "Green" "Setting up touch-pad controls"
+
+mkdir -p "/etc/X11/xorg.conf.d/"
+
+tee -a /etc/X11/xorg.conf.d/30-touchpad.conf << END
+Section "InputClass"
+        Identifier "MyTouchpad"
+        MatchIsTouchpad "on"
+        Driver "libinput"
+        Option "Tapping" "on"
+EndSection
+END
+
+colored_echo "Green" "Setting up emoji fonts"
+
+curl -sSL https://raw.githubusercontent.com/IgnisDa/linux-configs/main/scripts/setup-emojifonts.sh | sh
 
 colored_echo "Green" "
 ###############################################################################
@@ -255,7 +272,7 @@ else
 	sudo -u git config --global pull.rebase "true"
 	sudo -u git config --global core.editor "vim"
 	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome picom-tryone-git
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome picom-tryone-git neovim-nightly-bin
 fi
 
 
