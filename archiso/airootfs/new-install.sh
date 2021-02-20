@@ -157,7 +157,9 @@ END
 
 colored_echo "Green" "Setting up emoji fonts"
 
-curl -sSL https://raw.githubusercontent.com/IgnisDa/linux-configs/main/scripts/setup-emojifonts.sh | sh
+curl -sSL https://raw.githubusercontent.com/IgnisDa/linux-configs/master/scripts/setup-emojifonts.sh -o ./setup-emojifonts.sh
+chmod +x setup-emojifonts.sh
+./setup-emojifonts.sh
 
 colored_echo "Green" "
 ###############################################################################
