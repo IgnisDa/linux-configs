@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PS3='Please enter your choice: '
-options=("Django NuxtJS Docusaurus" "Django" "PostgreSQL" "NuxtJS" "Quit")
+options=("Django NuxtJS Docusaurus" "Django" "PostgreSQL" "NuxtJS" "Rust" "Quit")
 command="cookiecutter gh:IgnisDa/project-cookiecutter --directory"
 select opt in "${options[@]}"; do
     case $opt in
@@ -22,6 +22,11 @@ select opt in "${options[@]}"; do
             ;;
         "NuxtJS")
 	    command="$command nuxt"
+            eval $command
+	    break
+            ;;
+        "Rust")
+	    command="$command rust"
             eval $command
 	    break
             ;;
