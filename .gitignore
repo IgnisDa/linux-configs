@@ -17,3 +17,5 @@
 archiso/work/*
 archiso/out/*
 **/*__pycache__*/**
+!.bashrc
+!onedrive
