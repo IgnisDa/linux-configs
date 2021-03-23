@@ -86,6 +86,8 @@ def get_default_project_log(project_path: Path, id: int) -> Dict:
 def update_log_file_with_project(project_path: Path) -> None:
     """This function will update the log file with this run. Incase the
     project was not cached, it will update the log file and add the current run."""
+    if not os.path.isdir(STORAGE_DIRECTORY):
+        os.mkdir(STORAGE_DIRECTORY)
     if not check_if_cached(project_path):
         # the project does not exist in the logs, we need to update it with
         # the correct entry
@@ -244,9 +246,7 @@ if __name__ == "__main__":
     if not project_type:
         print("Could not guess the project type")
         exit(1)
-    if project_type == "rust":
+    if project_type == "rust" or build and not generate:
         build_project(directory, project_type)
-    elif (not build and not generate) or generate:
+    else:
         generate_project(directory, project_type)
-    elif build:
-        build_project(directory, project_type)
