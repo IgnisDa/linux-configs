@@ -214,7 +214,7 @@ def build_project(project_path: Path, project_type: str) -> None:
         )
         shutil.move(
             str(original_executable_path.resolve()),
-            project_path / "out" / executable_name,
+            project_path / "dist" / executable_name,
         )
 
 
