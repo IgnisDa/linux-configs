@@ -168,8 +168,8 @@ def build_project(project_path: Path, project_type: str) -> None:
     1. cargo build
     2. yarn generate
     """
-    directory = STORAGE_DIRECTORY / get_cache_directory_name(project_path)
     update_log_file_with_project(project_path)
+    directory = STORAGE_DIRECTORY / get_cache_directory_name(project_path)
     if project_type == "javascript":
         # delete the build directory in project path if it exists
         src_build_dir = str(directory / "dist")
@@ -202,8 +202,8 @@ def build_project(project_path: Path, project_type: str) -> None:
             ["cargo", "build", "--release", "--target-dir", directory.resolve()]
         )
         # we create the output folder if it does not exist
-        if not os.path.isdir(Path() / "out"):
-            os.mkdir(Path() / "out")
+        if not os.path.isdir(Path() / "dist"):
+            os.mkdir(Path() / "dist")
         # we copy the final file to the current directory inside an out folder
         executable_name = os.getcwd().split(os.path.sep)[-1]
         original_executable_path = (
