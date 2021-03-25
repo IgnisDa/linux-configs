@@ -20,3 +20,7 @@ which exa &>/dev/null && alias ls="exa -la"
 
 # set the cat alias
 which bat &>/dev/null && alias cat="bat"
+
+# set the man pager to bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
