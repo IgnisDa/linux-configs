@@ -274,7 +274,7 @@ else
 	sudo -u git config --global pull.rebase "true"
 	sudo -u git config --global core.editor "nvim"
 	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome picom-tryone-git neovim-nightly-bin printr
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git vagrant
 fi
 
 
@@ -290,7 +290,7 @@ colored_echo "Red" "
 ###############################################################################
 "
 
-colored_echo "Red" "
+colored_echo "Green" "
 ###############################################################################
 # Done, please reboot now!
 ###############################################################################
