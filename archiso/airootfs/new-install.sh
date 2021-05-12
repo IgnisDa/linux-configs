@@ -129,7 +129,7 @@ pacman_packages+=( adobe-source-code-pro-fonts otf-cascadia-code )
 pacman_packages+=( awesome htop sddm light feh neofetch bat exa )
 
 # Install dev tools
-pacman_packages+=( vim flameshot )
+pacman_packages+=( vim flameshot docker )
 
 # Install work tools
 pacman_packages+=( git virtualbox virtualbox-host-modules-arch vagrant python-pip )
@@ -226,10 +226,6 @@ colored_echo "Green" "
 ###############################################################################
 "
 
-colored_echo "Green" "Installing docker-compose"
-curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-
 git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
 cp -r /tmp/.config /home/"$username"/.config
 chown -R $username:$username -R /home/$username/.config/
@@ -274,7 +270,7 @@ else
 	sudo -u git config --global pull.rebase "true"
 	sudo -u git config --global core.editor "nvim"
 	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git vagrant
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git vagrant docker-compose
 fi
 
 
