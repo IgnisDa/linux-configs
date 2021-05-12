@@ -14,13 +14,13 @@ alias vim="nvim"
 alias new-project="~/.config/scripts/new-project"
 
 # Load the starship prompt
-which starship &>/dev/null && starship init fish | source
+command -v starship >/dev/null && starship init fish | source
 
 # set the exa alias
-which exa &>/dev/null && alias ls="exa -la"
+command -v exa >/dev/null && alias ls="exa -la"
 
 # set the cat alias
-which bat &>/dev/null && alias cat="bat"
+command -v bat >/dev/null && alias cat="bat"
 
 # set the man pager to bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
