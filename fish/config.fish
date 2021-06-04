@@ -5,8 +5,10 @@ command -v flutter >/dev/null && set PATH $PATH (flutter sdk-path)/bin
 set EDITOR nvim
 
 # Load pyenv only if it is installed on the system
-command -v pyenv >/dev/null && status --is-interactive; and source (pyenv init -|psub)
-
+if command -sq pyenv
+    status is-login; and pyenv init --path | source
+    #pyenv init - | source
+end
 # set the alias vim
 alias vim="nvim"
 
