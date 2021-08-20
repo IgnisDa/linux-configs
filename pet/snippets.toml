@@ -1,0 +1,9 @@
+[[snippets]]
+  description = "Create a new postgresql user"
+  command = "createuser <USER> -d -E"
+  output = ""
+
+[[snippets]]
+  description = "Create a new postgresql database"
+  command = "createdb <DBNAME> -O <OWNER>"
+  output = ""

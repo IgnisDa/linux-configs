@@ -1,6 +1,8 @@
 set fish_function_path $fish_function_path $HOME/.config/fish/plugin-foreign-env/functions
 set PATH $PATH /var/lib/snapd/snap/bin
-command -v flutter >/dev/null && set PATH $PATH (flutter sdk-path)/bin
+set -Ux JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+set -Ux JAVA_OPTS ''
+set -Ux JAVA_HOME '/usr/lib/jvm/default'
 
 set EDITOR nvim
 
