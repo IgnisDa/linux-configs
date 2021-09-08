@@ -29,3 +29,7 @@ command -v bat >/dev/null && alias cat="bat"
 # set the man pager to bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true

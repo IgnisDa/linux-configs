@@ -23,3 +23,4 @@ archiso/out/*
 **/*__pycache__*/**
 !.bashrc
 !onedrive
+!tabtab
