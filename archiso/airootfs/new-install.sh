@@ -132,7 +132,7 @@ pacman_packages+=( awesome htop sddm light feh neofetch bat exa )
 pacman_packages+=( vim flameshot docker )
 
 # Install work tools
-pacman_packages+=( git virtualbox virtualbox-host-modules-arch vagrant python-pip )
+pacman_packages+=( git virtualbox virtualbox-host-modules-arch vagrant nodejs npm python-pip )
 
 # Install audio
 pacman_packages+=( alsa-utils pulseaudio alsa-lib pavucontrol alsa-plugins )
@@ -220,7 +220,7 @@ fi
 # Replace in the same state
 cd "$pwd"
 
-colored_echo "Green" "
+colored_echo "Green" "Adding the SSH key can either be done manually (explained here), or by using cloud-init.
 ###############################################################################
 # Install user
 ###############################################################################
@@ -230,23 +230,19 @@ git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
 cp -r /tmp/.config /home/"$username"/.config
 chown -R $username:$username -R /home/$username/.config/
 
+
 mkdir -p /home/"$username"/work/projects/
 mkdir -p /home/"$username"/work/tutorials/
 mkdir -p /home/"$username"/work/learning/
-chown -R $username:$username -R /home/$username/work/
+ln -s /home/$username/.config/.bashrc /home/"$username"/.bashrc
+chown -R $username:$username -R /home/$username/
 
 systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable docker
-pip install commitizen cookiecutter
+pip install cookiecutter
 
-bashRC=/home/"$username"/.bashrc
-
-echo "" >> $bashRC
-echo "# if [[ \$(ps --no-header --pid=\$PPID --format=cmd) != \"fish\" ]]" >> $bashRC
-echo "# then" >> $bashRC
-echo "# 	exec fish" >> $bashRC
-echo "# fi" >> $bashRC
+npm install -g pnpm --unsafe-perms
 
 colored_echo "Yellow" "Would you like to add a new password for $username? (yes/no)"
 read -r yes
