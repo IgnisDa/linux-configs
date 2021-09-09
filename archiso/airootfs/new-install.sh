@@ -270,7 +270,7 @@ else
 	sudo -u "$username" git config --global pull.rebase "true"
 	sudo -u "$username" git config --global core.editor "nvim"
 	sudo -u "$username" makepkg -si --noconfirm
-	sudo -u "$username" yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git docker-compose starship firefox onedrive-abraunegg
+	sudo -u "$username" yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git docker-compose starship firefox onedrive-abraunegg nm-applet
 fi
 
 
