@@ -266,7 +266,7 @@ else
 	sudo -u git config --global pull.rebase "true"
 	sudo -u git config --global core.editor "nvim"
 	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git vagrant docker-compose
+	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git docker-compose starship firefox onedrive-abraunegg
 fi
 
 
