@@ -226,6 +226,7 @@ colored_echo "Green" "Adding the SSH key can either be done manually (explained 
 ###############################################################################
 "
 
+rm -rf /tmp/.config
 git clone https://github.com/IgnisDa/linux-configs.git /tmp/.config
 cp -r /tmp/.config /home/"$username"/.config
 chown -R $username:$username -R /home/$username/.config/
@@ -234,6 +235,7 @@ chown -R $username:$username -R /home/$username/.config/
 mkdir -p /home/"$username"/work/projects/
 mkdir -p /home/"$username"/work/tutorials/
 mkdir -p /home/"$username"/work/learning/
+rm -rf /home/$username/.bashrc
 ln -s /home/$username/.config/.bashrc /home/"$username"/.bashrc
 chown -R $username:$username -R /home/$username/
 
@@ -258,15 +260,17 @@ else
 	    exit 1
 	fi
 	echo "$username:$password" | chpasswd
+	rm -rf /home/$username/yay
 	git clone https://aur.archlinux.org/yay.git /home/$username/yay
 	cd /home/$username/yay/
+	chown -R $username:$username -R /home/$username
 	colored_echo "Green" "Running git configurations"
-	sudo -u git config --global user.username "$git_username"
-	sudo -u git config --global user.email "$email"
-	sudo -u git config --global pull.rebase "true"
-	sudo -u git config --global core.editor "nvim"
-	sudo -u $username makepkg -si --noconfirm
-	sudo -u $username yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git docker-compose starship firefox onedrive-abraunegg
+	sudo -u "$username" git config --global user.username "$git_username"
+	sudo -u "$username" git config --global user.email "$email"
+	sudo -u "$username" git config --global pull.rebase "true"
+	sudo -u "$username" git config --global core.editor "nvim"
+	sudo -u "$username" makepkg -si --noconfirm
+	sudo -u "$username" yay -S --answerdiff=None --noconfirm visual-studio-code-bin google-chrome neovim-nightly-bin printr-git docker-compose starship firefox onedrive-abraunegg
 fi
 
 
