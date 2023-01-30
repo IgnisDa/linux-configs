@@ -284,6 +284,15 @@ colored_echo "Red" "
 # grub-mkconfig -o /boot/grub/grub.cfg
 # os-prober
 ###############################################################################
+
+###############################################################################
+# If using refind, use the following link. Most of the steps can be followed as
+# it is, except the actual contents of the refind conf. See below for that.
+###############################################################################
+# URL: https://www.roxlu.com/2020/066/dual-boot-arch-linux-and-windows-10
+# Note the `/boot/refind_linux.conf` should look like this:
+# `"Boot with standard options" "rw root=UUID=af23820a-5fb8-469e-9fac-839a9656d614"`
+###############################################################################
 "
 
 colored_echo "Green" "
